@@ -1,7 +1,7 @@
 resource "azurerm_vmware_private_cloud" "privatecloud" {
-  name                = "${var.prefix}-SDDC"
+  name                = "${var.prefix}-${var.env}-${var.region}-sddc"
   resource_group_name = var.resource_group_name
-  location            = var.location
+  location            = var.region
   sku_name            = lower(var.sku_name)
 
   management_cluster {

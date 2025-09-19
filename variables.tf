@@ -4,24 +4,49 @@
 #-----------------------------------------------------------------
 
 variable "prefix" {
-  type = string
+  type        = string
   description = "Prefix to be used for resource naming"
 }
 
+variable "env" {
+  type        = string
+  description = "Environment to be used for resource naming"
+}
+
 variable "region" {
-  type = string
+  type        = string
   description = "Azure region where resources will be deployed"
 }
 
+variable "avs_configs" {
+  type = list(object({
+    sku             = string
+    mgmt_host_count = number
+    network_cidr    = string
+  }))
+}
+
+variable "mandatory_tags" {
+  type = map(string)
+  default = {
+    "APP"  = "AVS"
+    "DEPT" = "IT"
+    "ENV"  = "DEV"
+  }
+}
+
 variable "avs-network_cidr" {
-  type = string
+  type        = string
   description = "CIDR block for AVS private cloud"
 }
 
-variable "avs-sku" {
-  type    = string
-  default = "AV36P"
-  description = "SKU for AVS private cloud nodes"
+variable "avs_config" {
+  description = "Map of AVS clusters to deploy"
+  type = list(object({
+    sku             = string
+    mgmt_host_count = number
+    network_cidr    = string
+  }))
 }
 
 variable "avs-management_host_count" {
@@ -38,9 +63,9 @@ variable "avs-management_host_count" {
 variable "clusters" {
   description = "Map of AVS clusters to deploy"
   type = map(object({
-    name        = string
-    host_count  = number
-    sku         = string
+    name         = string
+    host_count   = number
+    sku          = string
     network_cidr = string
   }))
 }
@@ -78,20 +103,20 @@ variable "jumpboxsubnet" {
 variable "hcx_key_names" {
   type        = list(string)
   description = "list of key names to use when generating hcx site activation keys."
-   default     = []
+  default     = []
   validation {
-    condition     = length(var.hcx_key_names) <= 5  # HCX has a limit on number of keys
+    condition     = length(var.hcx_key_names) <= 5 # HCX has a limit on number of keys
     error_message = "Maximum of 5 HCX keys can be created per Private Cloud."
   }
 }
 
 variable "key_vault_name" {
-  type = string
+  type        = string
   description = "The name for the key vault used to store the jump virtual machine password."
 }
 
 variable "nsg_name" {
-  type = string
+  type        = string
   description = "The name to use for the default NSG deployed with the networks."
 }
 

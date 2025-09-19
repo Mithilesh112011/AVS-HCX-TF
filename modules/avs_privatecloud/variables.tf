@@ -1,6 +1,9 @@
-variable "prefix" {}
+variable "prefix" {
+    default = "avs"
+}
+variable "env" {}
+variable "region" {}
 variable "resource_group_name" {}
-variable "location" {}
 variable "sku_name" {}
 variable "management_host_count" {}
 variable "network_cidr" {}

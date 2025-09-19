@@ -3,36 +3,34 @@ module "avs_passwords" {
 }
 
 module "avs_privatecloud" {
-  source              = "./modules/avs_privatecloud"
-  prefix              = var.prefix
-  resource_group_name = azurerm_resource_group.privatecloud.name
-  location            = var.region
-  sku_name            = var.avs-sku
-  management_host_count= var.avs-management_host_count
-  network_cidr        = var.avs-network_cidr
-  nsxt_password       = module.avs_passwords.nsxt_password
-  vcenter_password    = module.avs_passwords.vcenter_password
-  tags = {
-    APP         = "AVS"
-    DEPT        = "IT"
-    ENV         = "Production"
-  }
+  source                = "./modules/avs_privatecloud"
+  region                = var.region
+  env                   = var.env
+  resource_group_name   = azurerm_resource_group.privatecloud.name
+  sku_name              = var.avs_config["sku"]
+  management_host_count = var.avs_config["mgmt_host_count"]
+  network_cidr          = var.avs_config["network_cidr"]
+  nsxt_password         = module.avs_passwords.nsxt_password
+  vcenter_password      = module.avs_passwords.vcenter_password
+  tags                  = merge(var.mandatory_tags, {
+    "Created_By" = "Ahead"
+  })
 }
 
 module "avs_workload_clusters_av36p" {
-  source            = "./modules/avs_workload_clusters"
-  privatecloud_id   = module.avs_privatecloud.privatecloud_id
-  cluster_name      = "Workload-Cluster-1"
-  cluster_node_count = 16  # Minimum 3 nodes required for AVS
-  sku_name          = "AV36P"  # Standard AVS SKU
+  source             = "./modules/avs_workload_clusters"
+  privatecloud_id    = module.avs_privatecloud.privatecloud_id
+  cluster_name       = var.clusters.av36p["name"]
+  cluster_node_count = var.clusters.av36p["host_count"]
+  sku_name           = var.clusters.av36p["sku"]
 }
 
 module "avs_workload_clusters_av64" {
-  source            = "./modules/avs_workload_clusters"
-  privatecloud_id   = module.avs_privatecloud.privatecloud_id
-  cluster_name      = "Workload-Cluster-2"
-  cluster_node_count = 8  # Minimum 3 nodes required for AVS
-  sku_name          = "AV64"  # Standard AVS SKU
+  source             = "./modules/avs_workload_clusters"
+  privatecloud_id    = module.avs_privatecloud.privatecloud_id
+  cluster_name       = var.clusters.av64.name
+  cluster_node_count = var.clusters.av64.host_count
+  sku_name           = var.clusters.av64.sku
 }
 
 /*
