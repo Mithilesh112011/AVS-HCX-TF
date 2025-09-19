@@ -7,9 +7,9 @@ module "avs_privatecloud" {
   region                = var.region
   env                   = var.env
   resource_group_name   = azurerm_resource_group.privatecloud.name
-  sku_name              = var.avs_config["sku"]
-  management_host_count = var.avs_config["mgmt_host_count"]
-  network_cidr          = var.avs_config["network_cidr"]
+  sku_name              = var.avs_config[0].sku
+  management_host_count = var.avs_config[0].mgmt_host_count
+  network_cidr          = var.avs_config[0].network_cidr
   nsxt_password         = module.avs_passwords.nsxt_password
   vcenter_password      = module.avs_passwords.vcenter_password
   tags                  = merge(var.mandatory_tags, {

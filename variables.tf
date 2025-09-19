@@ -54,7 +54,7 @@ variable "avs-management_host_count" {
   default     = 4
   description = "Number of hosts in the AVS cluster"
   validation {
-    condition     = var.avs-hostcount >= 3
+    condition     = var.avs-management_host_count >= 3
     error_message = "AVS requires a minimum of 3 hosts."
   }
 }

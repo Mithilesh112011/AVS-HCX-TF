@@ -1,4 +1,13 @@
 # Deploy the HCX Addon
+terraform {
+  required_providers {
+    azapi = {
+      source = "Azure/azapi"
+      version = ">=2.0.0"
+    }
+  }
+}
+
 resource "azapi_resource" "hcx_addon" {
   type = "Microsoft.AVS/privateClouds/addons@2021-12-01"
 
@@ -17,12 +26,6 @@ resource "azapi_resource" "hcx_addon" {
     ignore_changes = [
       parent_id
     ]
-  }
-
-  tags = {
-    Environment = var.environment
-    Service     = "AVS-HCX"
-    Terraform   = "true"
   }
 }
 
