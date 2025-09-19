@@ -13,23 +13,22 @@ module "avs_privatecloud" {
   nsxt_password       = module.avs_passwords.nsxt_password
   vcenter_password    = module.avs_passwords.vcenter_password
   tags = {
-    Environment = "Production"
-    Service     = "AVS-SDDC"
-    Terraform   = "true"
-    Creator     = "Terraform"
+    APP         = "AVS"
+    DEPT        = "IT"
+    ENV         = "Production"
   }
 }
 
-module "avs_workload_clusters1" {
-  source            = "./modules/avs_workload_clusters1"
+module "avs_workload_clusters_av36p" {
+  source            = "./modules/avs_workload_clusters"
   privatecloud_id   = module.avs_privatecloud.privatecloud_id
   cluster_name      = "Workload-Cluster-1"
   cluster_node_count = 16  # Minimum 3 nodes required for AVS
   sku_name          = "AV36P"  # Standard AVS SKU
 }
 
-module "avs_workload_clusters2" {
-  source            = "./modules/avs_workload_clusters2"
+module "avs_workload_clusters_av64" {
+  source            = "./modules/avs_workload_clusters"
   privatecloud_id   = module.avs_privatecloud.privatecloud_id
   cluster_name      = "Workload-Cluster-2"
   cluster_node_count = 8  # Minimum 3 nodes required for AVS
