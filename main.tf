@@ -1,3 +1,8 @@
+resource "azurerm_resource_group" "privatecloud" {
+  name     = "${var.prefix}-PrivateCloud"
+  location = var.region
+}
+
 module "avs_privatecloud" {
   source                = "./modules/avs_privatecloud"
   region                = var.region
