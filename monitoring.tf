@@ -28,7 +28,7 @@ resource "azurerm_monitor_metric_alert" "avs_CPUCritical" {
   criteria {
     metric_namespace = "Microsoft.AVS/privateClouds"
     metric_name      = "EffectiveCpuAverage"
-    Aggregation      = "Average"
+    aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 95
 
@@ -49,7 +49,7 @@ resource "azurerm_monitor_metric_alert" "avs_DiskUsedPercentage" {
   criteria {
     metric_namespace = "Microsoft.AVS/privateClouds"
     metric_name      = "DiskUsedPercentage"
-    Aggregation      = "Average"
+    aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 75
 
@@ -70,7 +70,7 @@ resource "azurerm_monitor_metric_alert" "avs_Memory" {
   criteria {
     metric_namespace = "Microsoft.AVS/privateClouds"
     metric_name      = "UsageAverage"
-    Aggregation      = "Average"
+    aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 80
 
@@ -82,7 +82,7 @@ resource "azurerm_monitor_metric_alert" "avs_Memory" {
   }
 }
 
-resource "azurerm_monitor_metric_alert" " avs_MemoryCritical" {
+resource "azurerm_monitor_metric_alert" "avs_MemoryCritical" {
   name                = "MemoryCritical-metricalert"
   resource_group_name = azurerm_resource_group.privatecloud.name
   scopes              = [module.avs_privatecloud.privatecloud_id]
@@ -91,7 +91,7 @@ resource "azurerm_monitor_metric_alert" " avs_MemoryCritical" {
   criteria {
     metric_namespace = "Microsoft.AVS/privateClouds"
     metric_name      = "UsageAverage"
-    Aggregation      = "Average"
+    aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 95
 
@@ -103,7 +103,7 @@ resource "azurerm_monitor_metric_alert" " avs_MemoryCritical" {
   }
 }
 
-resource "azurerm_monitor_metric_alert" "avs_storage   " {
+resource "azurerm_monitor_metric_alert" "avs_storage" {
   name                = "storage-metricalert"
   resource_group_name = azurerm_resource_group.privatecloud.name
   scopes              = [module.avs_privatecloud.privatecloud_id]
@@ -112,7 +112,7 @@ resource "azurerm_monitor_metric_alert" "avs_storage   " {
   criteria {
     metric_namespace = "Microsoft.AVS/privateClouds"
     metric_name      = "DiskUsedPercentage"
-    Aggregation      = "Average"
+    aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 70
 
@@ -133,7 +133,7 @@ resource "azurerm_monitor_metric_alert" "avs_UsageAverage"  {
   criteria {
     metric_namespace = "Microsoft.AVS/privateClouds"
     metric_name      = "UsageAverage"
-    Aggregation      = "Average"
+    aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = 80
 
